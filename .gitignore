@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.env.local
+.env*.local
+data/app.db
+data/app.db-journal
+data/app.db-wal
+data/app.db-shm
+data/projects
+data/snapshots
+data/logs
+*.log
+.DS_Store
