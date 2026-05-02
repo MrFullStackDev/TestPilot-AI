@@ -1,4 +1,4 @@
-# AI QA Assistant
+# TestPilot AI
 
 A local Next.js QA copilot that crawls a site, distills the DOM, generates Playwright tests via LLMs, and **self-heals locators** when they break. Multi-provider (Claude / GPT / Gemini), BYOK, runs on your laptop.
 
