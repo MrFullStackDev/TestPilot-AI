@@ -13,7 +13,7 @@ import { KbdHelp } from "@/components/KbdHelp";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
-  title: "AI QA Assistant",
+  title: "TestPilot AI",
   description: "QA copilot: generate tests, distil DOM, build self-healing Playwright suites with Claude / GPT / Gemini.",
 };
 
@@ -28,11 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Suspense fallback={null}><TopProgressBar /></Suspense>
                 <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
                   <div className="container flex h-14 items-center gap-4">
-                    <Link href="/" className="flex shrink-0 items-center gap-2 font-semibold tracking-tight" aria-label="AI QA Assistant home">
+                    <Link href="/" className="flex shrink-0 items-center gap-2 font-semibold tracking-tight" aria-label="TestPilot AI home">
                       <span className="grid h-7 w-7 place-items-center rounded-md bg-primary text-primary-foreground">
                         <Sparkles className="h-4 w-4" aria-hidden />
                       </span>
-                      <span className="hidden whitespace-nowrap sm:inline">AI QA Assistant</span>
+                      <span className="hidden whitespace-nowrap sm:inline">TestPilot AI</span>
                       <span className="whitespace-nowrap sm:hidden">QA</span>
                     </Link>
                     <nav className="flex flex-1 items-center gap-1 overflow-x-auto" aria-label="Main">
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <main className="container flex-1 py-6 sm:py-8">{children}</main>
                 <footer className="container mt-16 border-t py-4 text-xs text-muted-foreground">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span>AI QA Assistant · v0.2 · BYOK · runs locally</span>
+                    <span>TestPilot AI · v0.2 · BYOK · runs locally</span>
                     <span className="flex items-center gap-3">
                       <Link className="hover:text-foreground" href="/settings">Settings</Link>
                       <span>Press <kbd className="rounded border bg-muted px-1.5 py-0.5 font-mono">?</kbd> for shortcuts</span>
