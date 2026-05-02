@@ -141,9 +141,9 @@ function ProjectCard({ p, onRename, onDelete }: { p: Summary; onRename: () => vo
     <Card className="group relative overflow-hidden transition-shadow hover:shadow-md">
       <Link href={`/projects/${p.id}`} className="block focus:outline-none">
         <CardHeader className="pb-2">
-          <div className="flex items-start justify-between gap-2">
+          <div className="flex items-start justify-between gap-2 pr-8">
             <CardTitle className="line-clamp-1 text-base">{p.name}</CardTitle>
-            {p.framework && <Badge variant="outline" className="capitalize">{p.framework}</Badge>}
+            {p.framework && <Badge variant="outline" className="shrink-0 capitalize">{p.framework}</Badge>}
           </div>
           <p className="line-clamp-1 text-xs text-muted-foreground">{p.root_url}</p>
         </CardHeader>
