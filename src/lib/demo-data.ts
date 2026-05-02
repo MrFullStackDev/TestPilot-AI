@@ -19,8 +19,8 @@ export const demoProjects = [
     slug: "widget-dash",
     name: "Widget Dashboard",
     root_url: "https://widget.example.com",
-    framework: "cypress",
-    output_dir: "cypress/e2e",
+    framework: "playwright",
+    output_dir: "tests/generated",
     created_at: "2026-04-22T14:00:00Z",
   },
 ] as const;
@@ -37,7 +37,7 @@ export const demoSummaries = [
   },
   {
     id: 2, slug: "widget-dash", name: "Widget Dashboard",
-    root_url: "https://widget.example.com", framework: "cypress",
+    root_url: "https://widget.example.com", framework: "playwright",
     created_at: "2026-04-22T14:00:00Z",
     test_count: 2, flaky_count: 0, pending_heals: 0, cost_usd: 0.31,
     last_capture_at: "2026-04-28T11:00:00Z",
@@ -73,8 +73,8 @@ export const demoTests = {
     { id: 6, project_id: 1, name: "search returns relevant products", file_path: "tests/generated/search.spec.ts", flaky_flag: 0, flaky_reason: null, quarantined: 0 },
   ],
   2: [
-    { id: 11, project_id: 2, name: "dashboard renders without errors", file_path: "cypress/e2e/dashboard.cy.ts", flaky_flag: 0, flaky_reason: null, quarantined: 0 },
-    { id: 12, project_id: 2, name: "widget list filters by status", file_path: "cypress/e2e/widget-filter.cy.ts", flaky_flag: 0, flaky_reason: null, quarantined: 0 },
+    { id: 11, project_id: 2, name: "dashboard renders without errors", file_path: "tests/generated/dashboard.spec.ts", flaky_flag: 0, flaky_reason: null, quarantined: 0 },
+    { id: 12, project_id: 2, name: "widget list filters by status", file_path: "tests/generated/widget-filter.spec.ts", flaky_flag: 0, flaky_reason: null, quarantined: 0 },
   ],
 } as const;
 
