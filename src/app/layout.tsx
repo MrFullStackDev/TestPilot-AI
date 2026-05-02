@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <TooltipProvider delayDuration={300}>
             <Toaster>
               <ConfirmProvider>
-                <TopProgressBar />
+                <Suspense fallback={null}><TopProgressBar /></Suspense>
                 <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
                   <div className="container flex h-14 items-center gap-4">
                     <Link href="/" className="flex shrink-0 items-center gap-2 font-semibold tracking-tight" aria-label="AI QA Assistant home">

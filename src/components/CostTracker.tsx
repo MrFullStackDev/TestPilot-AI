@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatUSD } from "@/lib/cost";
+import { apiFetch } from "@/lib/api";
 
 type CostInfo = {
   total: number;
@@ -14,7 +15,7 @@ type CostInfo = {
 export function CostTracker({ projectId }: { projectId: number | string }) {
   const [cost, setCost] = useState<CostInfo | null>(null);
   useEffect(() => {
-    fetch(`/api/projects/${projectId}/cost`).then((r) => r.json()).then(setCost);
+    apiFetch(`/api/projects/${projectId}/cost`).then((r) => r.json()).then(setCost);
   }, [projectId]);
 
   if (!cost) return null;

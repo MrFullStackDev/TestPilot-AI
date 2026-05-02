@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["better-sqlite3", "playwright"],
-  },
-  webpack: (config) => {
-    config.externals.push("better-sqlite3", "playwright", "playwright-core");
-    return config;
-  },
+  output: "export",
+  basePath: "/AI-QA-Assistant",
+  trailingSlash: true,
+  images: { unoptimized: true },
+  eslint: { ignoreDuringBuilds: true },
 };
 
 export default nextConfig;

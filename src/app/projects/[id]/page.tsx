@@ -1,33 +1,46 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Play, Download, MoreHorizontal, Activity, Wand2, FileSearch, ScrollText, Lock } from "lucide-react";
-import { db } from "@/server/db/client";
+import { Play, Download, Activity, Wand2, FileSearch, ScrollText, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { CostTracker } from "@/components/CostTracker";
 import { WorkflowStepper, type Step } from "@/components/WorkflowStepper";
 import { ProjectActions } from "@/components/ProjectActions";
 import { ProjectActivity } from "@/components/ProjectActivity";
+import {
+  DEMO_PROJECT_IDS,
+  demoProjects,
+  demoPages,
+  demoTests,
+  demoHeals,
+  demoRuns,
+  demoLearn,
+  demoAuth,
+} from "@/lib/demo-data";
 
-export const dynamic = "force-dynamic";
-
-type Project = { id: number; slug: string; name: string; root_url: string; framework: string | null; created_at: string };
+export function generateStaticParams() {
+  return DEMO_PROJECT_IDS.map((id) => ({ id: String(id) }));
+}
 
 export default function ProjectPage({ params }: { params: { id: string } }) {
   const id = Number(params.id);
-  const project = db().prepare("SELECT * FROM projects WHERE id = ?").get(id) as Project | undefined;
+  const project = demoProjects.find((p) => p.id === id);
   if (!project) notFound();
 
-  const pageCount   = (db().prepare("SELECT COUNT(*) as c FROM pages WHERE project_id = ?").get(id) as { c: number }).c;
-  const captureCount= (db().prepare("SELECT COUNT(*) as c FROM page_captures pc JOIN pages p ON p.id = pc.page_id WHERE p.project_id = ?").get(id) as { c: number }).c;
-  const testCount   = (db().prepare("SELECT COUNT(*) as c FROM tests WHERE project_id = ?").get(id) as { c: number }).c;
-  const flakyCount  = (db().prepare("SELECT COUNT(*) as c FROM tests WHERE project_id = ? AND flaky_flag = 1").get(id) as { c: number }).c;
-  const pendingHeals= (db().prepare("SELECT COUNT(*) as c FROM heal_events he JOIN tests t ON t.id = he.test_id WHERE t.project_id = ? AND he.accepted = 0").get(id) as { c: number }).c;
-  const hasProfile  = !!db().prepare("SELECT 1 FROM site_profiles WHERE project_id = ?").get(id);
-  const hasAuth     = !!db().prepare("SELECT 1 FROM auth_states WHERE project_id = ?").get(id);
-  const lastRun     = db().prepare("SELECT id, status, started_at FROM runs WHERE project_id = ? ORDER BY id DESC LIMIT 1").get(id) as { id: number; status: string; started_at: string } | undefined;
+  const pages = (demoPages[id as 1 | 2] ?? []) as ReadonlyArray<{ captured: number }>;
+  const tests = (demoTests[id as 1 | 2] ?? []) as ReadonlyArray<{ flaky_flag: number }>;
+  const heals = (demoHeals[id as 1 | 2] ?? []) as ReadonlyArray<{ accepted: number }>;
+  const runs  = (demoRuns[id as 1 | 2] ?? []) as ReadonlyArray<{ id: number; status: string; started_at: string }>;
+  const pageCount    = pages.length;
+  const captureCount = pages.filter((p) => p.captured === 1).length;
+  const testCount    = tests.length;
+  const flakyCount   = tests.filter((t) => t.flaky_flag === 1).length;
+  const pendingHeals = heals.filter((h) => h.accepted === 0).length;
+  const hasProfile   = !!demoLearn[id as 1 | 2]?.profile;
+  const hasAuth      = !!demoAuth[id as 1 | 2]?.recorded;
+  const lastRun      = runs[0];
 
   const steps: Step[] = [
     { key: "discover", label: "Discover",  href: `/projects/${id}/crawl`,    done: pageCount > 0,    current: pageCount === 0,                    meta: pageCount > 0 ? `${pageCount} URLs` : undefined },
@@ -55,9 +68,9 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
           <Button variant="outline" asChild>
             <Link href={`/projects/${id}/runs`}><Play className="mr-1 h-4 w-4" />Run all</Link>
           </Button>
-          <a href={`/api/projects/${id}/export`} download>
-            <Button variant="outline"><Download className="mr-1 h-4 w-4" />Export</Button>
-          </a>
+          <Button variant="outline" disabled title="Disabled in static demo build">
+            <Download className="mr-1 h-4 w-4" />Export
+          </Button>
           <ProjectActions projectId={id} projectName={project.name} />
         </div>
       </div>

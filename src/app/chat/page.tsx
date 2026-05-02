@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Plus, Globe, Send, MessageSquare, Trash2, Pencil, RotateCw, Copy, ArrowDown, Menu, ExternalLink, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -38,6 +38,14 @@ const STARTER_PROMPTS = [
 ];
 
 export default function ChatPage() {
+  return (
+    <Suspense fallback={null}>
+      <ChatPageInner />
+    </Suspense>
+  );
+}
+
+function ChatPageInner() {
   const search = useSearchParams();
   const queryConvId = search?.get("c");
   const [convs, setConvs] = useState<Conv[]>([]);
